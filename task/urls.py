@@ -7,7 +7,9 @@ from . import views #(3) menimport views yang ada di apps
 #jika di viev ada def baru, maka membuat path baru
 urlpatterns = [
     path('', views.halloworld),
-    path('json/', views.jsonc),
-
+    # path('json/', views.jsonc),
+    path('create/', views.create),
+    path('<id>/delete/', views.delete),
+    path('<id>/update/', views.update),
 
 ]

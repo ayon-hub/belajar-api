@@ -20,9 +20,44 @@ def jsonc(req): #isi tampilan aja
     return JsonResponse({
         'data': isidata
     })
-def Create(req): #membuat create
-    buat = Belajar.object.all()
-    isibuat =[
-        for c in buat   :
-            isibuat.append()
-    ]
+def create(req):
+    if req.method == 'POST':
+        data_byte = req.body
+        data_string = str(data_byte, 'utf-8')
+        data = json.loads(data_string)
+
+        a = Task.objects.create(
+            judul=data['judul'], 
+            genre=data['genre'])
+        return JsonResponse({
+            'data': model_to_dict(a),
+        })
+        def delete(req, id):
+    if req.method == 'DELETE':
+        a = Task.objects.filter(pk=id).delete()
+    return JsonResponse({
+            'msg': 'data sudah terhapus'
+        })
+
+def detail(req, id):
+    if req.method == 'GET':
+        a = Task.objects.filter(pk=id).first()
+    return JsonResponse({
+        'data': model_to_dict(a),
+    })
+
+def update(req, id):
+    if req.method == 'PUT':
+        data_byte = req.body
+        data_string = str(data_byte,'utf-8')
+        data = json.loads(data_string)
+
+        a = Task.objects.filter(pk=id).update(
+            judul=data['judul'], 
+            genre=data['genre']
+        )
+        a = Task.objects.filter(pk=id).first()
+
+        return JsonResponse({
+            'data': model_to_dict(a),
+        }) 
